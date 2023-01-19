@@ -2,13 +2,16 @@ import { Text, View, TextInput, ImageBackground, Button, KeyboardAvoidingView, P
 import AppStyles from '../styles/AppStyles';
 import InlineTextButton from '../components/InlineTextButton';
 import React from 'react';
-import { auth } from "../firebase";
+import { auth,db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore"; 
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+
 
 export default function SignUp({ navigation }) {
   const background = require("../assets/background.jpg");
 
   let [email, setEmail] = React.useState("");
+  let [pseudo, setPseudo] = React.useState("");
   let [password, setPassword] = React.useState("");
   let [confirmPassword, setConfirmPassword] = React.useState("");
   let [validationMessage, setValidationMessage] = React.useState("");
@@ -23,18 +26,27 @@ export default function SignUp({ navigation }) {
     setValue(value);
   };
 
-  let signUp = () => {
+  let signUp =() => {
     if (password === confirmPassword) {
       createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         sendEmailVerification(auth.currentUser);
-        navigation.navigate("ToDo", { user: userCredential.user });
+        adduser(pseudo,email);
+        navigation.navigate("Home", { user: userCredential.user });
       })
       .catch((error) => {
         setValidationMessage(error.message);
       });
     }
   }
+  let adduser = async (name,mail) => {
+    
+    const docData = {
+      label: name,
+      value: auth.currentUser.uid
+    };
+    await setDoc(doc(db, "users", auth.currentUser.uid), docData);
+  };
 
   return (
     <ImageBackground style={AppStyles.imageContainer} source={background}>
@@ -50,6 +62,12 @@ export default function SignUp({ navigation }) {
           placeholderTextColor="#BEBEBE"
           value={email}
           onChangeText={setEmail} />
+        <TextInput 
+          style={[AppStyles.textInput, AppStyles.lightTextInput, AppStyles.lightText]} 
+          placeholder='Pseudo' 
+          placeholderTextColor="#BEBEBE"
+          value={pseudo}
+          onChangeText={setPseudo} />
         <TextInput 
           style={[AppStyles.textInput, AppStyles.lightTextInput, AppStyles.lightText]} 
           placeholder='Password' 

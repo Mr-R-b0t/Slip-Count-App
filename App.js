@@ -1,7 +1,7 @@
 import Login from './screens/Login';
 import SignUp from './screens/SignUp';
 import ResetPassword from './screens/ResetPassword';
-import ToDo from './screens/ToDo';
+import Home from './screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ManageAccount from './screens/ManageAccount';
@@ -29,8 +29,8 @@ export default function App() {
           component={ManageAccount}
           options={{headerShown: false}} />
         <Stack.Screen
-          name="ToDo"
-          component={ToDo}
+          name="Home"
+          component={Home}
           options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>

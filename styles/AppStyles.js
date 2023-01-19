@@ -64,10 +64,25 @@ export default StyleSheet.create({
     fontSize: 20,
     alignSelf: "center"
   },
+  titre: {
+    fontSize: 17,
+    alignSelf: "center"
+  },
+  headerIcon: {
+    alignSelf: "center"
+  },
   textInput: {
     alignSelf: 'stretch',
     padding: 8,
     borderBottomWidth: 2,
+    marginVertical: 8
+  },
+  partyList: {
+    alignSelf: 'stretch',
+    padding: 8,
+    backgroundColor: 'grey',
+    borderWidth: 2,
+    borderRadius: 10,
     marginVertical: 8
   },
   lightTextInput: {

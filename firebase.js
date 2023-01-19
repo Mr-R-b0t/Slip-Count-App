@@ -3,13 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDaUitBcy17bNrIUZ1l5bI3yBkyAF_lSps",
-  authDomain: "todoapp-cc8ba.firebaseapp.com",
-  projectId: "todoapp-cc8ba",
-  storageBucket: "todoapp-cc8ba.appspot.com",
-  messagingSenderId: "327285561962",
-  appId: "1:327285561962:web:afdbd615b7eb492b2f0813",
-  measurementId: "G-YEJX4F991Q"
+  apiKey: "AIzaSyC6LbN4imJXDhVt3CvtpoBeEEKZFMZLN9s",
+  authDomain: "fir-auth-73c3e.firebaseapp.com",
+  projectId: "fir-auth-73c3e",
+  storageBucket: "fir-auth-73c3e.appspot.com",
+  messagingSenderId: "1067975517382",
+  appId: "1:1067975517382:web:5c9bf73d03d7fdabeb63c7"
 };
 
 const app = initializeApp(firebaseConfig);

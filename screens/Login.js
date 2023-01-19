@@ -1,4 +1,4 @@
-import { Text, View, TextInput, ImageBackground, Button, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, ImageBackground, Image, Button, KeyboardAvoidingView, Platform } from 'react-native';
 import AppStyles from '../styles/AppStyles';
 import InlineTextButton from '../components/InlineTextButton';
 import React from 'react';
@@ -9,11 +9,11 @@ export default function Login({ navigation }) {
   const background = require("../assets/background.jpg");
 
   if (auth.currentUser) {
-    navigation.navigate("ToDo");
+    navigation.navigate("Home");
   } else {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.navigate("ToDo");
+        navigation.navigate("Home");
       }
     });
   }
@@ -26,7 +26,7 @@ export default function Login({ navigation }) {
     if (email !== "" && password !== "") {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          navigation.navigate("ToDo", { user: userCredential.user });
+          navigation.navigate("Home", { user: userCredential.user });
           setErrorMessage("");
           setEmail("");
           setPassword("");
@@ -41,6 +41,10 @@ export default function Login({ navigation }) {
 
   return (
     <ImageBackground style={AppStyles.imageContainer} source={background}>
+      <Image
+        style={AppStyles.headerIcon}
+        source={require('../assets/icon.png')}
+      />
       <KeyboardAvoidingView 
         style={AppStyles.backgroundCover} 
         behavior={Platform.OS === "ios" ? "padding" : null}

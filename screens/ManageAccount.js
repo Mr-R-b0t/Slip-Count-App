@@ -32,7 +32,7 @@ export default function ManageAccount({ navigation }) {
       });
   };
 
-  let deleteUserAndToDos = () => {
+  let deleteUserAndParty = () => {
     if (currentPassword === "") {
       setErrorMessage("Must enter current password to delete account");
     } else {
@@ -40,9 +40,9 @@ export default function ManageAccount({ navigation }) {
       .then((userCredential) => {
         const user = userCredential.user;
 
-        // Get all todos for user and delete
+        // Get all Party for user and delete
         let batch = writeBatch(db);
-        const q = query(collection(db, "todos"), where("userId", "==", user.uid));
+        const q = query(collection(db, "Party"), where("userId", "==", user.uid));
         getDocs(q).then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             batch.delete(doc.ref);
@@ -78,9 +78,9 @@ export default function ManageAccount({ navigation }) {
           secureTextEntry={true}
           onChangeText={setNewPassword} />
       <Button title="Update Password" onPress={updateUserPassword} />
-      <Button title="Delete User" onPress={deleteUserAndToDos} />
+      <Button title="Delete User" onPress={deleteUserAndParty} />
       <Button title="Logout" onPress={logout} />
-      <Button title="Back to ToDos" onPress={() => navigation.pop()} />
+      <Button title="Back to Home" onPress={() => navigation.pop()} />
     </View>
   );
 }
