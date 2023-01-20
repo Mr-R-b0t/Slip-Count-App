@@ -40,7 +40,11 @@ export default function InfoPartyModal(props) {
     let addYellow = (element)=>{
         if(element.userId==value){
             element.yellowCard += 1; 
-        }
+            if (element.yellowCard >= 3){
+                element.redCard += 1; 
+                element.yellowCard = 0;
+            };
+        };
     };
 
     return (

@@ -34,8 +34,12 @@ export default StyleSheet.create({
   rightAligned: {
     justifyContent: "flex-end"
   },
+  leftAligned:{
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   topMargin: {
-    marginTop: 16
+    marginTop: 25
   },
   bottomMargin: {
     marginBottom: 16
@@ -45,6 +49,9 @@ export default StyleSheet.create({
   },
   leftMargin: {
     marginLeft: 16
+  },
+  leftSmallMargin: {
+    marginLeft: 4
   },
   backgroundCover: {
     alignSelf: 'stretch',
@@ -62,6 +69,7 @@ export default StyleSheet.create({
   },
   header: {
     fontSize: 20,
+    textAlign: 'center',
     alignSelf: "center"
   },
   titre: {
@@ -97,5 +105,8 @@ export default StyleSheet.create({
   pressedInlineTextButton: {
     color: "#87F1FF",
     opacity: 0.6
+  },
+  bottomAreaMargin: {
+    marginBottom: 470
   }
 });

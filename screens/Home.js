@@ -16,7 +16,8 @@ export default function Home({ navigation }) {
   let [isLoading, setIsLoading] = React.useState(true);
   let [isRefreshing, setIsRefreshing] = React.useState(false);
   let [partys, setpartys] = React.useState([]);
-  var [partyValue, setpartyValue] = React.useState([]);
+  let [partyValue, setpartyValue] = React.useState([]);
+  let [firstElement, setFirstElement] = React.useState(false);
 
   let loadpartyList = async () => {
     const q = query(collection(db, "partys"), where("users_id", "array-contains", auth.currentUser.uid));
@@ -44,8 +45,66 @@ export default function Home({ navigation }) {
     setpartys(updatedpartys);
   };
 
+  let displayRedCard = (count) => {
+    if(count>0){
+    switch (count){
+      case 1:
+        return(<Image source={require('../assets/rouge.png')}/>);
+      case 2:
+        return(<View style={[AppStyles.leftAligned]}>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          </View>);
+      case 3:
+        return(<View style={[AppStyles.leftAligned]}>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          </View>);
+      case 4:
+        return(<View style={[AppStyles.leftAligned]}>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          </View>);
+      case 5:
+        return(<View style={[AppStyles.leftAligned]}>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          <Image source={require('../assets/rouge.png')}/>
+          </View>);
+      default:
+        return(<View style={[AppStyles.rowContainer]}>
+          <Text style={AppStyles.header}>Joueur exclu de la fédération de DRIFT !!!</Text>
+        </View>);
+    };}
+  };
+  let displayYellowCard = (count) => {
+    switch (count){
+      case 1:
+        return(<View style={AppStyles.leftAligned}>
+          <Image source={require('../assets/jaune.png')}/>
+          </View>);
+      case 2:
+        return(<View style={AppStyles.leftAligned}>
+          <Image style={AppStyles.leftSmallMargin} source={require('../assets/jaune.png')}/>
+          <Image style={AppStyles.leftSmallMargin} source={require('../assets/jaune.png')}/>
+          </View>);
+      case 3:
+        return(<View style={AppStyles.leftAligned}>
+          <Image style={AppStyles.leftSmallMargin} source={require('../assets/jaune.png')}/>
+          <Image style={AppStyles.leftSmallMargin} source={require('../assets/jaune.png')}/>
+          <Image style={AppStyles.leftSmallMargin} source={require('../assets/jaune.png')}/>
+          </View>);
+    }
+  };
+
   let renderpartyItem = ({item}) => {
     return (
+      <View>
       <View style={[AppStyles.rowContainer, AppStyles.rightMargin, AppStyles.leftMargin]}>
         <View style={[AppStyles.fillSpace,AppStyles.partyList]}>
           <Button
@@ -61,24 +120,29 @@ export default function Home({ navigation }) {
             data={item.user_info}
             renderItem={renderplayer}
           />
+          <InlineTextButton style={AppStyles.header} text="Leave" color="black" onPress={() => deleteparty(item.id)} />
         </View>
-        <InlineTextButton text="Leave" color="#258ea6" onPress={() => deleteparty(item.id)} />
+      </View>
       </View>
     );
   }
 
   let renderplayer = ({item}) => {
     return (
-      <View style={[AppStyles.rowContainer, AppStyles.rightMargin, AppStyles.leftMargin]}>
-        <View style={[AppStyles.fillSpace,AppStyles.partyList]}>
-        
-          <Text style={AppStyles.titre}>{item.pseudo}</Text>
-          <Text>Carton ROUGE : {item.redCard}</Text>
-          <Text>Carton JAUNE : {item.yellowCard}</Text>
-          
+      
+      
+        <View style={[AppStyles.rowContainer, AppStyles.rightMargin, AppStyles.leftMargin]}>
+          <View style={[AppStyles.fillSpace,AppStyles.partyList]}>
+            <Text style={AppStyles.titre}>{item.pseudo}</Text>
+            <View style={[AppStyles.rowContainer, AppStyles.leftSmallMargin]}>
+              {displayRedCard(item.redCard)}
+            </View>
+            <View style={[AppStyles.rowContainer, AppStyles.leftSmallMargin]}>
+              {displayYellowCard(item.yellowCard)}
+            </View>
+          </View>
         </View>
-       
-      </View>
+        
     );
   }
 
@@ -109,13 +173,7 @@ export default function Home({ navigation }) {
   let showContent = () => {
     return (
       <View>
-        <ScrollView>
-          <Button 
-            title="Add party" 
-            onPress={() => setModalVisible(true)} 
-            color="#fb4d3d" />
           {isLoading ? <ActivityIndicator size="large" /> : showpartyList() }
-        </ScrollView>
       </View>
     );
   };
@@ -158,12 +216,20 @@ export default function Home({ navigation }) {
 
     setpartys(updatedpartys);
   };
-  
-  return (
-    <SafeAreaView>
+  if(Platform.OS == 'android'){
+    return(<SafeAreaView style={AppStyles.bottomAreaMargin}>
       <View style={[AppStyles.rowContainer, AppStyles.rightAligned, AppStyles.rightMargin, AppStyles.topMargin]}>
         <InlineTextButton text="Manage Account" color="#258ea6" onPress={() => navigation.navigate("ManageAccount")}/>
       </View>
+      <View><Image
+      style={AppStyles.headerIcon}
+        source={require('../assets/icon.png')}
+      />
+      <Text style={AppStyles.header}>Slip Count</Text>
+      <Button 
+        title="Add party" 
+        onPress={() => setModalVisible(true)} 
+        color="#fb4d3d" /></View>
       <Modal
         animationType="slide"
         transparent={true}
@@ -183,16 +249,46 @@ export default function Home({ navigation }) {
           partyValue={partyValue}
           />
       </Modal>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        >
-        <Image
-          style={AppStyles.headerIcon}
-          source={require('../assets/icon.png')}
-        />
-        <Text style={AppStyles.header}>Slip Count</Text>
         {auth.currentUser.emailVerified ? showContent() : showSendVerificationEmail()}
-      </ScrollView>
+      
+    </SafeAreaView>);
+  }else{
+  return (
+    <SafeAreaView >
+      <View style={[AppStyles.rowContainer, AppStyles.rightAligned, AppStyles.rightMargin, AppStyles.topMargin]}>
+        <InlineTextButton text="Manage Account" color="#258ea6" onPress={() => navigation.navigate("ManageAccount")}/>
+      </View>
+      <View><Image
+      style={AppStyles.headerIcon}
+        source={require('../assets/icon.png')}
+      />
+      <Text style={AppStyles.header}>Slip Count</Text>
+      <Button 
+        title="Add party" 
+        onPress={() => setModalVisible(true)} 
+        color="#fb4d3d" /></View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <AddPartyModal 
+          onClose={() => setModalVisible(false)}
+          addparty={addparty} />
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={infoModalVisible}
+        onRequestClose={() => setInfoModalVisible(false)}>
+        <InfoPartyModal 
+          onClose={() => setInfoModalVisible(false)}
+          partyValue={partyValue}
+          />
+      </Modal>
+      
+        {auth.currentUser.emailVerified ? showContent() : showSendVerificationEmail()}
+      
     </SafeAreaView>
-  )
+  )};
 }
