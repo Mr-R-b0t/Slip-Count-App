@@ -41,6 +41,12 @@ export default StyleSheet.create({
   topMargin: {
     marginTop: 25
   },
+  topNegMargin: {
+    marginTop: -280
+  },
+  topSmalNegMargin: {
+    marginTop: -8
+  },
   bottomMargin: {
     marginBottom: 16
   },
@@ -69,6 +75,12 @@ export default StyleSheet.create({
   },
   header: {
     fontSize: 20,
+    textAlign: 'center',
+    alignSelf: "center"
+  },
+  titreButton: {
+    fontSize: 20,
+    color:"white",
     textAlign: 'center',
     alignSelf: "center"
   },
@@ -108,5 +120,9 @@ export default StyleSheet.create({
   },
   bottomAreaMargin: {
     marginBottom: 470
-  }
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: "#fb4d3d",
+  },
 });

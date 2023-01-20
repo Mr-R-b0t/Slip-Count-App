@@ -1,4 +1,4 @@
-import { View, Button, Text, Modal, SafeAreaView, ActivityIndicator, FlatList, Image, ScrollView} from 'react-native';
+import { View, Button, Text, Modal, SafeAreaView, ActivityIndicator, FlatList, Image, TouchableOpacity} from 'react-native';
 import InlineTextButton from '../components/InlineTextButton';
 import AppStyles from '../styles/AppStyles';
 import { auth, db } from "../firebase";
@@ -9,7 +9,6 @@ import AddPartyModal from '../components/AddPartyModal';
 import InfoPartyModal from '../components/InfoPartyModal';
 
 
-
 export default function Home({ navigation }) {
   let [modalVisible, setModalVisible] = React.useState(false);
   let [infoModalVisible, setInfoModalVisible] = React.useState(false);
@@ -17,7 +16,6 @@ export default function Home({ navigation }) {
   let [isRefreshing, setIsRefreshing] = React.useState(false);
   let [partys, setpartys] = React.useState([]);
   let [partyValue, setpartyValue] = React.useState([]);
-  let [firstElement, setFirstElement] = React.useState(false);
 
   let loadpartyList = async () => {
     const q = query(collection(db, "partys"), where("users_id", "array-contains", auth.currentUser.uid));
@@ -112,10 +110,17 @@ export default function Home({ navigation }) {
             color="grey"
             onPress={() => {console.log(item)}} 
           />
-          <Button 
-          title="Je siffle !!!" 
-          onPress={() => {setInfoModalVisible(true),setpartyValue(item)}} 
-          color="#fb4d3d" />
+          <TouchableOpacity
+            onPress={() => {setInfoModalVisible(true),setpartyValue(item)}}
+            style={AppStyles.button}>
+            <View style={[AppStyles.leftAligned,AppStyles.topSmalNegMargin]}>
+              <Image
+                style={AppStyles.headerIcon}
+                source={require('../assets/sifflet.png')}
+              />
+              <Text style={AppStyles.titreButton}>Je siffle !!!</Text>
+            </View>
+          </TouchableOpacity>
           <FlatList
             data={item.user_info}
             renderItem={renderplayer}

@@ -1,4 +1,4 @@
-import { View, Text, Button } from 'react-native';
+import { View, Text, Image, Button } from 'react-native';
 import React from 'react';
 import AppStyles from '../styles/AppStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -49,6 +49,10 @@ export default function InfoPartyModal(props) {
 
     return (
       <View style={AppStyles.container}>
+        <Image
+            style={[AppStyles.headerIcon,AppStyles.topNegMargin]}
+            source={require('../assets/drift.png')}
+        />
         <Text style={AppStyles.header}>Qui a dérapé ?</Text>
         <DropDownPicker
             placeholder="Select the drifter"
