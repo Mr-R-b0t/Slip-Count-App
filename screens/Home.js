@@ -223,7 +223,7 @@ export default function Home({ navigation }) {
   };
   if(Platform.OS == 'android'){
     return(<SafeAreaView style={AppStyles.bottomAreaMargin}>
-      <View style={[AppStyles.rowContainer, AppStyles.rightAligned, AppStyles.rightMargin, AppStyles.topMargin]}>
+      <View style={[AppStyles.rowContainer, AppStyles.rightAligned, AppStyles.rightMargin]}>
         <InlineTextButton text="Manage Account" color="#258ea6" onPress={() => navigation.navigate("ManageAccount")}/>
       </View>
       <View><Image
