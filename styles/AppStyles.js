@@ -119,7 +119,7 @@ export default StyleSheet.create({
     opacity: 0.6
   },
   bottomAreaMargin: {
-    marginBottom: 470
+    marginBottom: 432
   },
   button: {
     alignItems: 'center',
